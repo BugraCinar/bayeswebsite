@@ -1,0 +1,74 @@
+@model List<bayessoft.Models.Icerik>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #2c3e50;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    button {
+        padding: 8px 12px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        margin-right: 6px;
+        cursor: pointer;
+    }
+
+    button.delete {
+        background-color: #c0392b;
+    }
+
+    #icerikFormContainer {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #ecf0f1;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <th>Tanım</th>
+            <th>Açıklama (TR)</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Tanim</td>
+                <td>@item.TrDescription?.Substring(0, Math.Min(50, item.TrDescription.Length))...</td>
+                <td>
+                    <button data-edit-icerik="@item.Id">Düzenle</button>
+                    <button class="delete" onclick="deleteIcerik(@item.Id)">Sil</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button data-edit-icerik="0">+ Yeni İçerik Ekle</button>
+
+<div id="icerikFormContainer"></div>

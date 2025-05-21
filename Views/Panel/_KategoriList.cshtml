@@ -1,0 +1,82 @@
+@model List<bayessoft.Models.HizmetKategori>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-size: 15px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #2c3e50;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    button {
+        padding: 8px 12px;
+        margin-right: 6px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button.delete {
+        background-color: #c0392b;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+    #kategoriFormContainer {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #ecf0f1;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <th>Ad (TR)</th>
+            <th>Ad (EN)</th>
+            <th>Bağlantı</th>
+            <th>Resim</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var k in Model)
+        {
+            <tr>
+                <td>@k.KategoriAdiTr</td>
+                <td>@k.KategoriAdiEn</td>
+                <td>@k.BaglantiUzantisi</td>
+                <td><img src="/images/kategoriler/@k.ResimUrl" width="80" /></td>
+                <td>
+                    <button data-edit-kategori="@k.Id">Düzenle</button>
+                    <button class="delete" onclick="deleteKategori(@k.Id)">Sil</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button data-edit-kategori="0">+ Yeni Kategori Ekle</button>
+
+<div id="kategoriFormContainer"></div>

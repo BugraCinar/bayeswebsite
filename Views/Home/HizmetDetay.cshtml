@@ -1,0 +1,48 @@
+@model bayessoft.Models.LayoutViewModel
+
+@{
+    ViewData["Title"] = Model.SeciliHizmet != null
+        ? (Model.IsEnglish ? Model.SeciliHizmet.UrunAdiEn : Model.SeciliHizmet.UrunAdiTr)
+        : (Model.IsEnglish ? "Service" : "Hizmet");
+
+    Layout = "_Layout";
+}
+
+<section class="hizmet-detay-section py-5">
+    <div class="container">
+        @if (Model.SeciliHizmet != null)
+        {
+            
+            <div class="text-center mb-4">
+                <img src="/images/hizmetler/@Model.SeciliHizmet.ResimUrl" alt="@Model.SeciliHizmet.UrunAdiTr" class="img-fluid shadow rounded hizmet-resim" />
+            </div>
+        }
+    </div>
+
+  
+    <div class="hizmet-icerik-alani py-5">
+        <div class="container">
+            <h1 class="text-center hizmet-baslik fw-bold mb-4">
+                @(Model.IsEnglish ? Model.SeciliHizmet?.UrunAdiEn : Model.SeciliHizmet?.UrunAdiTr)
+            </h1>
+
+            <div class="hizmet-aciklama mx-auto">
+                <p>
+                    @(Model.IsEnglish ? Model.SeciliHizmet?.AciklamaEn : Model.SeciliHizmet?.AciklamaTr)
+                </p>
+                <div class="text-end mt-4">
+                    <a href="/@(Model.IsEnglish ? "en/" : "")iletisim" class="hizmet-iletisim-link">
+                        <strong>
+                            @(Model.IsEnglish ? "Contact" : "İletişim")
+                            <i class="fas fa-angle-double-right ms-1"></i>
+                        </strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles {
+    <link rel="stylesheet" href="/css/hizmet-detay.css" />
+}

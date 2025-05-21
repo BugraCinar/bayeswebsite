@@ -1,0 +1,305 @@
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #2c2c2c;
+}
+
+
+.matrix-section {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+
+#matrixCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: block;
+}
+
+
+.matrix-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+   
+}
+
+
+.matrix-logo img {
+    max-width: 220px;
+    max-height: 220px;
+    animation: fadeInUp 2s ease-in-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate(-15%, -40%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-15%, -50%);
+    }
+}
+
+
+.about-section {
+    background-color: #FFFBDE; 
+    padding: 60px 0;
+}
+
+.about-section img {
+    border-radius: 10px;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.about-section h2 {
+    font-size: 38px; 
+    font-weight: 800; 
+    margin-top: -10px; 
+    color: #00879E; 
+}
+
+.about-section p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #333;
+}
+
+.about-section .btn {
+    background-color: #00879E;
+    color: #fff;
+    padding: 12px 30px;
+    font-weight: 500;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 4px;
+}
+
+.about-section .btn:hover {
+    background-color: #006f86;
+}
+
+
+.kategori-section {
+    padding: 80px 0;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.kategori-slider {
+    display: flex;
+    gap: 30px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 0 20px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    justify-content: center; 
+}
+
+@media (max-width: 768px) {
+    .kategori-slider {
+        justify-content: flex-start;
+    }
+}
+
+.kategori-box {
+    flex: 0 0 320px;
+    background-color: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+}
+
+.kategori-box:hover {
+    transform: translateY(-5px);
+}
+
+.kategori-box img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.kategori-content {
+    padding: 20px;
+    text-align: left;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.kategori-content h5 {
+    position: relative;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    height: 48px; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    
+    display: -webkit-box;
+    display: box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+}
+
+.kategori-content h5::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 3px;
+    height: 90%;
+    background-color: #e30613;
+}
+
+.kategori-content a {
+    font-size: 15px;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    padding-left: 10px;
+}
+
+.kategori-content a:hover {
+    color: #00bcd4;
+}
+
+.kategori-heading-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.kategori-heading {
+    font-weight: 700;
+    font-size: 2rem;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    color: #2c2c2c;
+}
+
+.kategori-heading-wrapper::before,
+.kategori-heading-wrapper::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background-color: #00bcd4; 
+    max-width: 100px;
+}
+
+.kategori-slider::-webkit-scrollbar {
+    display: none;
+}
+.kategori-slider {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+
+.full-width-bg {
+    background-color: #F1EFEC;
+    width: 100%;
+}
+
+
+.btn-hover-effect {
+    position: relative;
+    display: inline-flex; 
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: #00879E;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    max-width: max-content;
+}
+
+.btn-hover-effect--effect-1:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(0, 1);
+    transform-origin: right top;
+    z-index: -1;
+    transition: transform 0.3s ease;
+}
+
+.btn-hover-effect--effect-1:after {
+    content: '\f105';
+    font-family: "Font Awesome 5 Free";
+    font-size: 18px;
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -25px;
+    opacity: 0;
+    transition: right 0.3s ease, opacity 0.3s ease;
+}
+
+.btn-hover-effect--effect-1 span {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.btn-hover-effect--effect-1:hover span {
+    transform: translateX(-5px); 
+}
+
+.btn-hover-effect--effect-1:hover:before {
+    transform: scale(1, 1);
+    transform-origin: left top;
+}
+
+.btn-hover-effect--effect-1:hover:after {
+    right: 0;
+    opacity: 1;
+}
+
+

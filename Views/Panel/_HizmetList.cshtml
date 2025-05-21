@@ -1,0 +1,82 @@
+@model List<bayessoft.Models.Hizmet>
+
+@inject bayessoft.Data.AppDbContext _context
+
+@{
+    var kategoriler = _context.HizmetKategorileri.ToDictionary(k => k.Id, k => k.KategoriAdiTr);
+}
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #2c3e50;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    button {
+        padding: 8px 12px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        margin-right: 6px;
+        cursor: pointer;
+    }
+
+    button.delete {
+        background-color: #c0392b;
+    }
+
+    #hizmetFormContainer {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #ecf0f1;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <th>Ad (TR)</th>
+            <th>Kategori</th>
+            <th>Resim</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var h in Model)
+        {
+            <tr>
+                <td>@h.UrunAdiTr</td>
+                <td>@(kategoriler.ContainsKey(h.KategoriId) ? kategoriler[h.KategoriId] : "Kategori Yok")</td>
+                <td><img src="/images/hizmetler/@h.ResimUrl" width="80" /></td>
+                <td>
+                    <button data-edit-hizmet="@h.Id">Düzenle</button>
+                    <button class="delete" onclick="deleteHizmet(@h.Id)">Sil</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button data-edit-hizmet="0">+ Yeni Hizmet Ekle</button>
+
+<div id="hizmetFormContainer"></div>

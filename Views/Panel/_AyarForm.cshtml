@@ -1,0 +1,52 @@
+@model bayessoft.Models.Ayar
+
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"], textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    button {
+        padding: 10px 16px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 15px;
+        align-self: flex-start;
+    }
+
+    button:hover {
+        background-color: #219150;
+    }
+</style>
+
+<form id="ayarForm">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div>
+        <label>Ayar Adı</label>
+        <input type="text" name="AyarAdi" value="@Model.AyarAdi" required />
+    </div>
+
+    <div>
+        <label>İçerik</label>
+        <textarea name="Icerik" rows="4">@Model.Icerik</textarea>
+    </div>
+
+    <button type="submit">Kaydet</button>
+</form>

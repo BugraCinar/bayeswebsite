@@ -1,0 +1,123 @@
+.kategori-section {
+    padding: 80px 0;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.kategori-box {
+    flex: 0 0 320px;
+    background-color: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+}
+
+.kategori-box:hover {
+    transform: translateY(-5px);
+}
+
+.kategori-box img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.kategori-content {
+    padding: 20px;
+    text-align: left;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.kategori-content h5 {
+    position: relative;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    height: 48px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+}
+
+.kategori-content h5::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 3px;
+    height: 90%;
+    background-color: #e30613;
+}
+
+.kategori-content a {
+    font-size: 15px;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    padding-left: 10px;
+}
+
+.kategori-content a:hover {
+    color: #00bcd4;
+}
+
+
+.kategori-slider {
+    gap: 30px;
+    overflow-x: auto;
+    padding: 0 20px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.kategori-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.kategori-slider {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+
+.kategori-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.kategori-section p {
+    font-size: 16px;
+    color: #6c757d;
+}
+
+.arrow-down {
+    font-size: 24px;
+    color: #00879E;
+    line-height: 1;
+    animation: bounceDown 1.5s infinite;
+}
+
+@keyframes bounceDown {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+}

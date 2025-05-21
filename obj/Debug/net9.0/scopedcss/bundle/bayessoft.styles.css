@@ -1,0 +1,101 @@
+/* _content/bayessoft/Views/Shared/_Layout.cshtml.rz.scp.css */
+body[b-qgrfmzxi8o] {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+/* NAVBAR */
+.navbar[b-qgrfmzxi8o] {
+    background-color: #F1EFEC;
+}
+
+.navbar-brand img[b-qgrfmzxi8o] {
+    height: 40px;
+}
+
+.navbar-nav .nav-link[b-qgrfmzxi8o] {
+    color: #2c2c2c !important; /* siyahımsı */
+    font-weight: 500;
+    padding: 10px 15px;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover[b-qgrfmzxi8o] {
+    color: #00879E !important;
+}
+
+.navbar .lang-flag[b-qgrfmzxi8o] {
+    width: 24px;
+    height: 16px;
+    object-fit: cover;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* FOOTER ÜST */
+.footer[b-qgrfmzxi8o] {
+    background-color: #282A3A;
+    color: white;
+}
+
+.footer h5[b-qgrfmzxi8o] {
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.footer a[b-qgrfmzxi8o] {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover[b-qgrfmzxi8o] {
+    color: #00879E;
+    text-decoration: none;
+}
+
+.footer p[b-qgrfmzxi8o],
+.footer ul[b-qgrfmzxi8o] {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.footer i[b-qgrfmzxi8o] {
+    margin-right: 8px;
+}
+
+/* FOOTER ALT */
+.footer .text-center[b-qgrfmzxi8o] {
+    background-color: #000000;
+    color: white;
+    padding: 15px 0;
+}
+
+.footer .text-center a[b-qgrfmzxi8o] {
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.footer .text-center a:hover[b-qgrfmzxi8o] {
+    color: #00879E;
+    text-decoration: none;
+}
+
+img.lang-flag[b-qgrfmzxi8o] {
+    width: 24px !important;
+    height: auto !important;
+    max-height: 16px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    object-fit: contain;
+    margin-left: 6px;
+    transition: transform 0.2s ease;
+}

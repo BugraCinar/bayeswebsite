@@ -1,0 +1,58 @@
+@model bayessoft.Models.LayoutViewModel
+
+@{
+    ViewData["Title"] = Model.Navbar.Hizmetler;
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/css/hizmetkategori.css" />
+}
+
+<section class="kategori-section py-5">
+    <div class="container">
+        <h2 class="text-center fw-bold display-6 mb-2">
+    @(Model.IsEnglish ? "Service Categories" : "Hizmet Kategorileri")
+</h2>
+<p class="text-center text-muted mb-5">
+    @(Model.IsEnglish
+        ? "You can navigate to the most suitable category for your project using the boxes below."
+        : "Projenize uygun kategori sekmesine aşağıdaki kutucuklardan gidebilirsiniz.")
+</p>
+    <div class="text-center mb-5">
+        <div class="arrow-down">&#8595;</div>
+        <div class="arrow-down">&#8595;</div>
+    </div>
+        
+        <div class="kategori-grid d-none d-md-flex flex-wrap justify-content-center gap-4">
+            @foreach (var kategori in Model.HizmetKategorileri)
+            {
+                <div class="kategori-box">
+                    <img src="/images/kategoriler/@kategori.ResimUrl" alt="@kategori.KategoriAdiTr" />
+                    <div class="kategori-content">
+                        <h5>@(Model.IsEnglish ? kategori.KategoriAdiEn : kategori.KategoriAdiTr)</h5>
+                        <a href="/hizmet-kategori/@kategori.BaglantiUzantisi">
+                            @(Model.IsEnglish ? "Read More" : "Devamını Oku")
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        
+        <div class="kategori-slider d-flex d-md-none">
+            @foreach (var kategori in Model.HizmetKategorileri)
+            {
+                <div class="kategori-box">
+                    <img src="/images/kategoriler/@kategori.ResimUrl" alt="@kategori.KategoriAdiTr" />
+                    <div class="kategori-content">
+                        <h5>@(Model.IsEnglish ? kategori.KategoriAdiEn : kategori.KategoriAdiTr)</h5>
+                        <a href="/hizmet-kategori/@kategori.BaglantiUzantisi">
+                            @(Model.IsEnglish ? "Read More" : "Devamını Oku")
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

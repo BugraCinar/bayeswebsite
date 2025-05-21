@@ -1,0 +1,47 @@
+.hizmet-detay-section {
+    background-color: #ffffff;
+    padding: 80px 0;
+}
+
+.hizmet-icerik-alani {
+    background-color: #F1EFEC !important; 
+    width: 100%;
+}
+
+.hizmet-resim {
+    max-width: 700px;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.hizmet-baslik {
+    font-size: 36px;
+    color: #00879E;
+    text-transform: capitalize;
+}
+
+.hizmet-aciklama {
+    max-width: 850px;
+    font-size: 18px;
+    line-height: 1.8;
+    color: #333;
+    margin: 0 auto;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.hizmet-iletisim-link {
+    font-size: 16px;
+    font-weight: 600;
+    color: #00879E;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.hizmet-iletisim-link:hover {
+    color: #005f70;
+}

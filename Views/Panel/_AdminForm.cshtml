@@ -1,0 +1,53 @@
+@model bayessoft.Models.Admin
+
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 4px;
+    }
+
+    input[type="text"], input[type="password"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    button[type="submit"] {
+        padding: 10px 16px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 15px;
+        align-self: flex-start;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #219150;
+    }
+</style>
+
+<form id="adminForm">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div>
+        <label>Kullanıcı Adı</label>
+        <input type="text" name="Username" value="@Model.Username" required />
+    </div>
+
+    <div>
+        <label>Şifre (değiştirmek isterseniz girin)</label>
+        <input type="password" name="PasswordHash" />
+    </div>
+
+    <button type="submit">Kaydet</button>
+</form>

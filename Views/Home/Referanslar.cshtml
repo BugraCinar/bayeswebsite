@@ -1,0 +1,33 @@
+@model bayessoft.Models.LayoutViewModel
+
+@{
+    ViewData["Title"] = Model.Navbar.Referanslar;
+    Layout = "_Layout";
+}
+
+<section class="referanslar-section py-5">
+    <div class="container">
+        <h2 class="text-center fw-bold display-5 mb-3">
+            @Model.Navbar.Referanslar
+        </h2>
+        <p class="text-center text-muted mb-5">
+            @(Model.IsEnglish ? Model.Icerikler["referans-metin"].EnDescription : Model.Icerikler["referans-metin"].TrDescription)
+        </p>
+
+        <div class="row justify-content-center g-4">
+            @foreach (var refItem in Model.Referanslar)
+            {
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="referans-card shadow-sm p-3 bg-white rounded text-center h-100">
+                        <img src="/images/referanslar/@refItem.ResimUrl" class="img-fluid mb-3 referans-img" alt="@refItem.Isim" />
+                        <h6 class="fw-semibold">@refItem.Isim</h6>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@section Styles {
+    <link rel="stylesheet" href="/css/referanslar.css" />
+}

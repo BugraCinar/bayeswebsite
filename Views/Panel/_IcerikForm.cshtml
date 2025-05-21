@@ -1,0 +1,65 @@
+@model bayessoft.Models.Icerik
+
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        max-width: 700px;
+    }
+
+    label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    textarea {
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    button[type="submit"] {
+        padding: 10px 20px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 15px;
+        cursor: pointer;
+        align-self: flex-start;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #1e874b;
+    }
+</style>
+
+<form id="icerikForm">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div>
+        <label>Tanım</label>
+        <input type="text" name="Tanim" value="@Model.Tanim" required />
+    </div>
+
+    <div>
+        <label>Açıklama (TR)</label>
+        <textarea name="TrDescription" rows="3">@Model.TrDescription</textarea>
+    </div>
+
+    <div>
+        <label>Açıklama (EN)</label>
+        <textarea name="EnDescription" rows="3">@Model.EnDescription</textarea>
+    </div>
+
+    <button type="submit">Kaydet</button>
+</form>
