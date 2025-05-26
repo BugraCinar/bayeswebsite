@@ -17,7 +17,7 @@ namespace bayessoft.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);  // modeller arası ilişkiler düzenleme yeri, referans url ekleme ve resim url ekleme kısmından sonra kategori referans bağlama yapılacak
 
             
             modelBuilder.Entity<Admin>().ToTable("admin");

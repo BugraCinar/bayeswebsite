@@ -16,10 +16,10 @@
     @RenderSection("Styles", required: false)
 </head>
 <body class="d-flex flex-column min-vh-100">
-   
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+     
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">  <!–- NAVBARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR -->
         <a class="navbar-brand" href="/">
-            <img src="/images/genel/logo-nav.png" alt="Bayes Soft" height="40" />
+            <img src="/images/genel/logo-nav.png" alt="Bayes Soft" height="40" />   // width düzeltilcek yeni gelen logoda  
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
             <span class="navbar-toggler-icon"></span>
@@ -45,25 +45,26 @@
     <main class="main-content flex-fill" style="padding-top: 80px;">
         @RenderBody()
     </main>
-
-   
-    <footer class="footer mt-auto pt-5 pb-3 bg-dark text-light">
+ 
+      @* # FOOTERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR  *@
+     
+    <footer class="footer mt-auto pt-5 pb-3 bg-dark text-light">  
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3"> 
                     <img src="/images/genel/logo-white.png" alt="Logo" height="40" />
                     <p class="mt-2">@Model.Footer.KisaYazi</p>
                 </div>
                 <div class="col-md-3">
                     <h5>@Model.Navbar.Hizmetler</h5>
                     <ul class="list-unstyled">
-                        @foreach (var kategori in Model.HizmetKategorileri)
-                        {
+                        @foreach (var kategori in Model.HizmetKategorileri)    //kategorileri dinamik olarak buradan çekiyoruz
+                        { 
                             <li>
                                 <a href="/hizmet-kategori/@kategori.BaglantiUzantisi" class="text-white">
                                     @(Model.IsEnglish ? kategori.KategoriAdiEn : kategori.KategoriAdiTr)
                                 </a>
-                            </li>
+                            </li> 
                         }
                     </ul>
                 </div>
@@ -92,7 +93,7 @@
 
     <script>
         function switchLang(lang) {
-            const path = window.location.pathname;
+            const path = window.location.pathname;     // dil mevzusu
             if (lang === 'en' && !path.startsWith('/en')) {
                 window.location.href = '/en' + path;
             } else if (lang === 'tr' && path.startsWith('/en')) {

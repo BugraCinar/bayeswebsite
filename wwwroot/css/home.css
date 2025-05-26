@@ -54,7 +54,7 @@ body {
         opacity: 0;
         transform: translate(-15%, -40%);
     }
-    to {
+    to {         /*  burada logonun konuma gelişini değiştir cok sabit kalıyor*/
         opacity: 1;
         transform: translate(-15%, -50%);
     }

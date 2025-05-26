@@ -3,7 +3,7 @@ using bayessoft.Data;
 using Microsoft.EntityFrameworkCore;
 using bayessoft.Services;
 
-DotEnv.Load();
+DotEnv.Load();  //loadda niye .Env baglami gerekmiyo
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +19,7 @@ var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
 var dbname = Environment.GetEnvironmentVariable("DB_NAME");
 
 
-var connectionString = $"server={host};port={port};database={dbname};user={user};password={password};";
+var connectionString = $"server={host};port={port};database={dbname};user={user};password={password};"; //bunu heroku için raw formatta yazmak lazım
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));

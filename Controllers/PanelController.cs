@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using bayessoft.Data;
 using bayessoft.Models;
 
-
 namespace bayessoft.Controllers
 {
     public class PanelController : Controller
@@ -14,49 +13,65 @@ namespace bayessoft.Controllers
             _context = context;
         }
 
-          private bool IsLoggedIn()
+        /* 
+
+
+
+           ÖNEMLİ >>>
+
+           admin giriş kontrolü yapmam lazımdı ilk başta token ile yapacaktım ama çok ekstraya giriyordu token ile yapmak sonrasında sayfaya girişi
+           engellemek için sessionda bilgi tutmayı gördüm ancak tam anlamı ile entegre edemedim, session kontrol kısmında ai yardımı da aldım ama 
+           direkt ai komutu ile yapmak yerine elimle yapmayı deneyince tam olmadı session cookies engelleme de çünkü işi bozuyordu o yüzden admin session eksik kaldı  */
+        
+
+        
+        private bool IsLoggedIn()
         {
             return HttpContext.Session.GetString("admin_giris") == "ok";
         }
 
+        // admin list
         [HttpGet]
         public IActionResult Admin()
         {
-             if (!IsLoggedIn()) return Redirect("/admin");
+            if (!IsLoggedIn()) return Redirect("/admin");
             var admins = _context.Admins.ToList();
             return PartialView("_AdminList", admins);
         }
 
+        // admin get
         [HttpGet]
         public IActionResult AdminForm(int? id)
         {
-              if (!IsLoggedIn()) return Redirect("/admin");
+            if (!IsLoggedIn()) return Redirect("/admin");
             if (id.HasValue && id.Value > 0)
             {
                 var admin = _context.Admins.FirstOrDefault(a => a.Id == id.Value);
                 if (admin != null)
                     return PartialView("_AdminForm", admin);
             }
-
-          
             return PartialView("_AdminForm", new Admin { Username = "", PasswordHash = "" });
         }
+
+        // admin post
         [HttpPost]
         public IActionResult AdminForm(Admin admin)
         {
             if (!IsLoggedIn()) return Redirect("/admin");
+
             if (admin.Id == 0)
             {
+                // yeni admin 
                 admin.PasswordHash = BCrypt.Net.BCrypt.HashPassword(admin.PasswordHash);
                 _context.Admins.Add(admin);
             }
             else
             {
+                // mevcut admin güncelle
                 var existing = _context.Admins.FirstOrDefault(a => a.Id == admin.Id);
                 if (existing != null)
                 {
                     existing.Username = admin.Username;
-
                     if (!string.IsNullOrWhiteSpace(admin.PasswordHash))
                         existing.PasswordHash = BCrypt.Net.BCrypt.HashPassword(admin.PasswordHash);
                 }
@@ -66,7 +81,7 @@ namespace bayessoft.Controllers
             return Json(new { success = true });
         }
 
-
+        // ayarlar list
         [HttpGet("/panel/ayarlar")]
         public IActionResult Ayarlar()
         {
@@ -75,6 +90,7 @@ namespace bayessoft.Controllers
             return PartialView("_AyarList", ayarlar);
         }
 
+        // ayar get
         [HttpGet("/panel/AyarForm")]
         public IActionResult AyarForm(int? id)
         {
@@ -89,10 +105,12 @@ namespace bayessoft.Controllers
             return PartialView("_AyarForm", new Ayar { AyarAdi = "", Icerik = "" });
         }
 
+        // ayar post
         [HttpPost("/panel/AyarForm")]
         public IActionResult AyarForm(Ayar ayar)
         {
             if (!IsLoggedIn()) return Redirect("/admin");
+
             if (ayar.Id == 0)
             {
                 _context.Ayarlar.Add(ayar);
@@ -111,6 +129,7 @@ namespace bayessoft.Controllers
             return Json(new { success = true });
         }
 
+        // hizmet kategori list
         [HttpGet("/panel/hizmetkategorileri")]
         public IActionResult HizmetKategorileri()
         {
@@ -119,10 +138,12 @@ namespace bayessoft.Controllers
             return PartialView("_KategoriList", kategoriler);
         }
 
+        // hizmet kategori get
         [HttpGet("/panel/KategoriForm")]
         public IActionResult KategoriForm(int? id)
         {
             if (!IsLoggedIn()) return Redirect("/admin");
+
             if (id.HasValue && id.Value > 0)
             {
                 var kategori = _context.HizmetKategorileri.FirstOrDefault(k => k.Id == id.Value);
@@ -133,11 +154,13 @@ namespace bayessoft.Controllers
             return PartialView("_KategoriForm", new HizmetKategori());
         }
 
+        // hizmet kategori post
         [HttpPost("/panel/KategoriForm")]
         public async Task<IActionResult> KategoriForm(IFormCollection form, IFormFile ResimDosyasi)
         {
             if (!IsLoggedIn()) return Redirect("/admin");
             int.TryParse(form["Id"], out int id);
+
             var kategori = id == 0
                 ? new HizmetKategori()
                 : _context.HizmetKategorileri.FirstOrDefault(k => k.Id == id);
@@ -148,9 +171,10 @@ namespace bayessoft.Controllers
             kategori.KategoriAdiEn = form["KategoriAdiEn"];
             kategori.BaglantiUzantisi = form["BaglantiUzantisi"];
 
+            // resim 
             if (ResimDosyasi != null && ResimDosyasi.Length > 0)
             {
-                if (ResimDosyasi.Length > 5 * 1024 * 1024) 
+                if (ResimDosyasi.Length > 5 * 1024 * 1024)
                     return BadRequest("Dosya çok büyük.");
 
                 var fileName = Path.GetFileName(ResimDosyasi.FileName);
@@ -171,24 +195,22 @@ namespace bayessoft.Controllers
             return Json(new { success = true });
         }
 
+        // kategori sil
         [HttpPost("/panel/KategoriSil")]
         public IActionResult KategoriSil(int id)
         {
             if (!IsLoggedIn()) return Redirect("/admin");
+
             var kategori = _context.HizmetKategorileri.FirstOrDefault(k => k.Id == id);
             if (kategori != null)
             {
-               
                 if (!string.IsNullOrWhiteSpace(kategori.ResimUrl))
                 {
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/kategoriler", kategori.ResimUrl);
                     if (System.IO.File.Exists(path))
-                    {
                         System.IO.File.Delete(path);
-                    }
                 }
 
-                
                 _context.HizmetKategorileri.Remove(kategori);
                 _context.SaveChanges();
             }
@@ -196,6 +218,7 @@ namespace bayessoft.Controllers
             return Json(new { success = true });
         }
 
+        // hizmet listesi
         [HttpGet("/panel/hizmetler")]
         public IActionResult Hizmetler()
         {
@@ -204,10 +227,12 @@ namespace bayessoft.Controllers
             return PartialView("_HizmetList", hizmetler);
         }
 
+        // hizmet get
         [HttpGet("/panel/HizmetForm")]
         public IActionResult HizmetForm(int? id)
         {
             if (!IsLoggedIn()) return Redirect("/admin");
+
             var hizmet = id.HasValue && id.Value > 0
                 ? _context.Hizmetler.FirstOrDefault(h => h.Id == id.Value)
                 : new Hizmet();
@@ -215,11 +240,13 @@ namespace bayessoft.Controllers
             return PartialView("_HizmetForm", hizmet);
         }
 
+        // hizmet post
         [HttpPost("/panel/HizmetForm")]
         public async Task<IActionResult> HizmetForm(IFormCollection form, IFormFile ResimDosyasi)
         {
             if (!IsLoggedIn()) return Redirect("/admin");
             int.TryParse(form["Id"], out int id);
+
             var hizmet = id == 0
                 ? new Hizmet()
                 : _context.Hizmetler.FirstOrDefault(h => h.Id == id);
@@ -231,15 +258,13 @@ namespace bayessoft.Controllers
             hizmet.AciklamaTr = form["AciklamaTr"];
             hizmet.AciklamaEn = form["AciklamaEn"];
             hizmet.BaglantiUzantisi = form["BaglantiUzantisi"];
-            if (int.TryParse(form["KategoriId"], out int kategoriId))
-            {
-                hizmet.KategoriId = kategoriId;
-            }
-            else
-            {
-                return BadRequest("Geçersiz kategori.");
-            }
 
+            if (int.TryParse(form["KategoriId"], out int kategoriId))
+                hizmet.KategoriId = kategoriId;
+            else
+                return BadRequest("Geçersiz kategori.");
+
+            // resim 
             if (ResimDosyasi != null && ResimDosyasi.Length > 0)
             {
                 if (ResimDosyasi.Length > 5 * 1024 * 1024)
@@ -263,18 +288,20 @@ namespace bayessoft.Controllers
             return Json(new { success = true });
         }
 
+        // hizmet silme
         [HttpPost("/panel/HizmetSil")]
         public IActionResult HizmetSil(int id)
         {
             if (!IsLoggedIn()) return Redirect("/admin");
+
             var hizmet = _context.Hizmetler.FirstOrDefault(h => h.Id == id);
             if (hizmet != null)
             {
-                // resmi sil
                 if (!string.IsNullOrWhiteSpace(hizmet.ResimUrl))
                 {
                     var path = Path.Combine("wwwroot/images/hizmetler", hizmet.ResimUrl);
-                    if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+                    if (System.IO.File.Exists(path))
+                        System.IO.File.Delete(path);
                 }
 
                 _context.Hizmetler.Remove(hizmet);
@@ -284,6 +311,7 @@ namespace bayessoft.Controllers
             return Json(new { success = true });
         }
 
+        // içerikler list
         [HttpGet("/panel/icerikler")]
         public IActionResult Icerikler()
         {
@@ -292,6 +320,7 @@ namespace bayessoft.Controllers
             return PartialView("_IcerikList", liste);
         }
 
+        // içerik get
         [HttpGet("/panel/IcerikForm")]
         public IActionResult IcerikForm(int? id)
         {
@@ -299,26 +328,20 @@ namespace bayessoft.Controllers
             if (id.HasValue && id.Value > 0)
             {
                 var icerik = _context.Icerikler.FirstOrDefault(i => i.Id == id.Value);
-                if (icerik == null)
-                    return NotFound(); 
+                if (icerik == null) return NotFound();
 
                 return PartialView("_IcerikForm", icerik);
             }
 
-            
-            var yeniIcerik = new Icerik
-            {
-                Tanim = "",
-                TrDescription = "",
-                EnDescription = ""
-            };
-
-            return PartialView("_IcerikForm", yeniIcerik);
+            return PartialView("_IcerikForm", new Icerik { Tanim = "", TrDescription = "", EnDescription = "" });
         }
+
+        // içerik post
         [HttpPost("/panel/IcerikForm")]
         public IActionResult IcerikForm(Icerik model)
         {
             if (!IsLoggedIn()) return Redirect("/admin");
+
             if (model.Id == 0)
                 _context.Icerikler.Add(model);
             else
@@ -336,6 +359,7 @@ namespace bayessoft.Controllers
             return Json(new { success = true });
         }
 
+        // icerik silme
         [HttpPost("/panel/IcerikSil")]
         public IActionResult IcerikSil(int id)
         {
@@ -346,95 +370,95 @@ namespace bayessoft.Controllers
                 _context.Icerikler.Remove(icerik);
                 _context.SaveChanges();
             }
+
             return Json(new { success = true });
         }
 
+        // referans list
         [HttpGet("/panel/referanslar")]
-public IActionResult Referanslar()
-{
-    if (!IsLoggedIn()) return Redirect("/admin");
-    var liste = _context.Referanslar.ToList();
-    return PartialView("_ReferansList", liste);
-}
-
-[HttpGet("/panel/ReferansForm")]
-public IActionResult ReferansForm(int? id)
-{
-    if (!IsLoggedIn()) return Redirect("/admin");
-    var model = id.HasValue && id.Value > 0
-        ? _context.Referanslar.FirstOrDefault(r => r.Id == id.Value)
-        : new Referans { Isim = "", ResimUrl = "" };
-
-    return PartialView("_ReferansForm", model);
-}
-
-[HttpPost("/panel/ReferansForm")]
-public async Task<IActionResult> ReferansForm(IFormCollection form)
-{
-    if (!IsLoggedIn()) return Redirect("/admin");
-    int id = 0;
-    int.TryParse(form["Id"], out id);
-    string isim = form["Isim"].ToString();
-    var dosya = form.Files["ResimDosyasi"];
-
-    string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/referanslar");
-    string dosyaAdi = "";
-    string mevcutDosyaAdi = ""; 
-
-    if (id == 0 && dosya == null)
-        return Json(new { success = false, message = "Yeni referans için resim yüklemek zorunludur." });
-
-    if (dosya != null)
-    {
-        if (dosya.Length > 5 * 1024 * 1024)
-            return Json(new { success = false, message = "Dosya boyutu 5MB'dan büyük olamaz." });
-
-        dosyaAdi = Path.GetFileName(dosya.FileName);
-        string yol = Path.Combine(uploadsFolder, dosyaAdi);
-
-        using (var stream = new FileStream(yol, FileMode.Create))
+        public IActionResult Referanslar()
         {
-            await dosya.CopyToAsync(stream);
+            if (!IsLoggedIn()) return Redirect("/admin");
+            var liste = _context.Referanslar.ToList();
+            return PartialView("_ReferansList", liste);
         }
-    }
 
-    if (id == 0)
-    {
-        var yeni = new Referans
+        // referans get
+        [HttpGet("/panel/ReferansForm")]
+        public IActionResult ReferansForm(int? id)
         {
-            Isim = isim,
-            ResimUrl = dosyaAdi
-        };
-        _context.Referanslar.Add(yeni);
-    }
-    else
-    {
-        var mevcut = _context.Referanslar.FirstOrDefault(r => r.Id == id);
-        if (mevcut != null)
-        {
-            mevcut.Isim = isim;
-            if (!string.IsNullOrEmpty(dosyaAdi))
-                mevcut.ResimUrl = dosyaAdi;
+            if (!IsLoggedIn()) return Redirect("/admin");
+            var model = id.HasValue && id.Value > 0
+                ? _context.Referanslar.FirstOrDefault(r => r.Id == id.Value)
+                : new Referans { Isim = "", ResimUrl = "" };
+
+            return PartialView("_ReferansForm", model);
         }
-    }
 
-    _context.SaveChanges();
-    return Json(new { success = true });
-}
+        // referans post
+        [HttpPost("/panel/ReferansForm")]
+        public async Task<IActionResult> ReferansForm(IFormCollection form)
+        {
+            if (!IsLoggedIn()) return Redirect("/admin");
 
-[HttpPost("/panel/ReferansSil")]
-public IActionResult ReferansSil(int id)
-{
-    if (!IsLoggedIn()) return Redirect("/admin");
-    var refItem = _context.Referanslar.FirstOrDefault(r => r.Id == id);
-    if (refItem != null)
-    {
-        _context.Referanslar.Remove(refItem);
-        _context.SaveChanges();
-    }
+            int id = 0;
+            int.TryParse(form["Id"], out id);
+            string isim = form["Isim"];
+            var dosya = form.Files["ResimDosyasi"];
 
-    return Json(new { success = true });
-}
+            string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/referanslar");
+            string dosyaAdi = "";
 
+            if (id == 0 && dosya == null)
+                return Json(new { success = false, message = "Yeni referans için resim yüklemek zorunludur." });
+
+            if (dosya != null)
+            {
+                if (dosya.Length > 5 * 1024 * 1024)
+                    return Json(new { success = false, message = "Dosya boyutu 5MB'dan büyük olamaz." });
+
+                dosyaAdi = Path.GetFileName(dosya.FileName);
+                string yol = Path.Combine(uploadsFolder, dosyaAdi);
+
+                using (var stream = new FileStream(yol, FileMode.Create))
+                {
+                    await dosya.CopyToAsync(stream);
+                }
+            }
+
+            if (id == 0)
+            {
+                var yeni = new Referans { Isim = isim, ResimUrl = dosyaAdi };
+                _context.Referanslar.Add(yeni);
+            }
+            else
+            {
+                var mevcut = _context.Referanslar.FirstOrDefault(r => r.Id == id);
+                if (mevcut != null)
+                {
+                    mevcut.Isim = isim;
+                    if (!string.IsNullOrEmpty(dosyaAdi))
+                        mevcut.ResimUrl = dosyaAdi;
+                }
+            }
+
+            _context.SaveChanges();
+            return Json(new { success = true });
+        }
+
+        // referans sil
+        [HttpPost("/panel/ReferansSil")]
+        public IActionResult ReferansSil(int id)
+        {
+            if (!IsLoggedIn()) return Redirect("/admin");
+            var refItem = _context.Referanslar.FirstOrDefault(r => r.Id == id);
+            if (refItem != null)
+            {
+                _context.Referanslar.Remove(refItem);
+                _context.SaveChanges();
+            }
+
+            return Json(new { success = true });
+        }
     }
 }

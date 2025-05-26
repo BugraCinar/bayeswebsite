@@ -1,35 +1,31 @@
-
+// ajax agam ile işler
 function loadPanelContent(section) {
     fetch(`/panel/${section}`)
         .then(response => response.text())
         .then(html => {
             document.getElementById('icerik-alani').innerHTML = html;
 
+        
             if (section === 'admin') {
                 attachAdminButtonEvents();
                 attachAdminFormSubmit();
             }
-
             if (section === 'ayarlar') {
                 attachAyarButtonEvents();
                 attachAyarFormSubmit();
             }
-
             if (section === 'hizmetkategorileri') {
                 attachKategoriButtonEvents();
                 attachKategoriFormSubmit();
             }
-
             if (section === 'hizmetler') {
                 attachHizmetButtonEvents();
                 attachHizmetFormSubmit();
             }
-
             if (section === 'icerikler') {
                 attachIcerikButtonEvents();
                 attachIcerikFormSubmit();
             }
-
             if (section === 'referanslar') {
                 attachReferansButtonEvents();
                 attachReferansFormSubmit(); 
@@ -40,7 +36,9 @@ function loadPanelContent(section) {
         });
 }
 
-// admin kısmı ------------------------------------------------------------------------------------------
+// ========================== admin ====================================== ok burası glb
+
+// admin  ekleme düzenleme
 function editAdmin(id) {
     fetch('/panel/AdminForm?id=' + id)
         .then(res => res.text())
@@ -54,13 +52,12 @@ function editAdmin(id) {
         .catch(err => console.error('Form yüklenirken hata:', err));
 }
 
-
+// admin  submit 
 function attachAdminFormSubmit() {
     const form = document.getElementById('adminForm');
     if (form) {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-
             const formData = new FormData(form);
 
             fetch('/panel/AdminForm', {
@@ -70,7 +67,7 @@ function attachAdminFormSubmit() {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    loadPanelContent('admin'); 
+                    loadPanelContent('admin');
                 } else {
                     alert(data.message || 'Kayıt başarısız.');
                 }
@@ -83,7 +80,7 @@ function attachAdminFormSubmit() {
     }
 }
 
-
+// admin  click event 
 function attachAdminButtonEvents() {
     const buttons = document.querySelectorAll('[data-edit-admin]');
     buttons.forEach(button => {
@@ -92,18 +89,21 @@ function attachAdminButtonEvents() {
     });
 }
 
+// admin düzenleme 
 function handleAdminEdit(e) {
     const id = this.getAttribute('data-edit-admin') || 0;
     editAdmin(id);
 }
 
-
+// sayfa yüklendiginde admin olayları tanımla
 document.addEventListener('DOMContentLoaded', function () {
     attachAdminButtonEvents();
     attachAdminFormSubmit();
 });
 
-// ayarlar kısmı ----------------------------------------------------------------------------------
+// ==================??????????????????????========= ayarlar ====================================================
+
+// ayar form submit 
 function attachAyarFormSubmit() {
     const form = document.getElementById('ayarForm');
     if (form) {
@@ -125,7 +125,7 @@ function attachAyarFormSubmit() {
     }
 }
 
-
+// ayar  event listener 
 function attachAyarButtonEvents() {
     const buttons = document.querySelectorAll('[data-edit-ayar]');
     buttons.forEach(btn => {
@@ -134,6 +134,7 @@ function attachAyarButtonEvents() {
     });
 }
 
+// ayar düzenleme 
 function handleAyarEdit() {
     const id = this.getAttribute('data-edit-ayar') || 0;
     fetch(`/panel/AyarForm?id=${id}`)
@@ -144,6 +145,9 @@ function handleAyarEdit() {
         });
 }
 
+// ======================//==== kategori ======//==================== ok bura ya
+
+// kategori buton
 function attachKategoriButtonEvents() {
     document.querySelectorAll('[data-edit-kategori]').forEach(btn => {
         btn.removeEventListener('click', handleKategoriEdit);
@@ -151,6 +155,7 @@ function attachKategoriButtonEvents() {
     });
 }
 
+// kategori formunu yükle
 function handleKategoriEdit() {
     const id = this.getAttribute('data-edit-kategori') || 0;
     fetch(`/panel/KategoriForm?id=${id}`)
@@ -161,6 +166,7 @@ function handleKategoriEdit() {
         });
 }
 
+// kategori submit 
 function attachKategoriFormSubmit() {
     const form = document.getElementById('kategoriForm');
     if (form) {
@@ -180,6 +186,7 @@ function attachKategoriFormSubmit() {
     }
 }
 
+// kategori sil
 function deleteKategori(id) {
     if (confirm("Bu kategoriyi silmek istediğinize emin misiniz?")) {
         fetch('/panel/KategoriSil', {
@@ -194,6 +201,9 @@ function deleteKategori(id) {
     }
 }
 
+// ==================?????????????======== hizmetler =================================================================
+
+// hizmet  butonları
 function attachHizmetButtonEvents() {
     document.querySelectorAll('[data-edit-hizmet]').forEach(btn => {
         btn.removeEventListener('click', handleHizmetEdit);
@@ -201,6 +211,7 @@ function attachHizmetButtonEvents() {
     });
 }
 
+// hizmet  yükle
 function handleHizmetEdit() {
     const id = this.getAttribute('data-edit-hizmet') || 0;
     fetch(`/panel/HizmetForm?id=${id}`)
@@ -211,6 +222,7 @@ function handleHizmetEdit() {
         });
 }
 
+// hizmet  submit 
 function attachHizmetFormSubmit() {
     const form = document.getElementById('hizmetForm');
     if (form) {
@@ -222,14 +234,15 @@ function attachHizmetFormSubmit() {
                 method: 'POST',
                 body: formData
             })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) loadPanelContent('hizmetler');
-                });
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) loadPanelContent('hizmetler');
+            });
         });
     }
 }
 
+// hizmet sil
 function deleteHizmet(id) {
     if (confirm("Bu hizmeti silmek istediğinize emin misiniz?")) {
         fetch('/panel/HizmetSil', {
@@ -244,6 +257,9 @@ function deleteHizmet(id) {
     }
 }
 
+// ============????????????????????????=============== içerikler ======================================================
+
+// içerik buton
 function attachIcerikButtonEvents() {
     document.querySelectorAll('[data-edit-icerik]').forEach(btn => {
         btn.removeEventListener('click', handleIcerikEdit);
@@ -251,6 +267,7 @@ function attachIcerikButtonEvents() {
     });
 }
 
+// içerik düzenleme  yükle
 function handleIcerikEdit() {
     const id = this.getAttribute('data-edit-icerik');
     fetch('/panel/IcerikForm?id=' + id)
@@ -261,6 +278,7 @@ function handleIcerikEdit() {
         });
 }
 
+// içerik  submit et
 function attachIcerikFormSubmit() {
     const form = document.getElementById('icerikForm');
     if (form) {
@@ -272,14 +290,15 @@ function attachIcerikFormSubmit() {
                 method: 'POST',
                 body: formData
             })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) loadPanelContent('icerikler');
-                });
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) loadPanelContent('icerikler');
+            });
         });
     }
 }
 
+// içerik silme
 function deleteIcerik(id) {
     if (confirm("Bu içeriği silmek istediğinize emin misiniz?")) {
         fetch('/panel/IcerikSil', {
@@ -294,6 +313,9 @@ function deleteIcerik(id) {
     }
 }
 
+// ========================== referanslar ==========================
+
+// referans düzenleme butonları
 function attachReferansButtonEvents() {
     document.querySelectorAll('[data-edit-referans]').forEach(btn => {
         btn.removeEventListener('click', handleReferansEdit);
@@ -301,6 +323,7 @@ function attachReferansButtonEvents() {
     });
 }
 
+// referans düzenleme formunu yüklee
 function handleReferansEdit() {
     const id = this.getAttribute('data-edit-referans');
     fetch('/panel/ReferansForm?id=' + id)
@@ -311,6 +334,7 @@ function handleReferansEdit() {
         });
 }
 
+// referans formunu submit et
 function attachReferansFormSubmit() {
     const form = document.getElementById('referansForm');
     if (form) {
@@ -335,6 +359,7 @@ function attachReferansFormSubmit() {
     }
 }
 
+// referans silme yeri
 function deleteReferans(id) {
     if (confirm("Referansı silmek istiyor musunuz?")) {
         fetch('/panel/ReferansSil', {
