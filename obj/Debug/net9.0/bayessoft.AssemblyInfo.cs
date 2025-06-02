@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("bayessoft")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+412cbcb66b1353c046f3f8ecbf813b8410d3a2ea")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be2c9fb79ae682c747cb2ed8ef1a89ab142b94ca")]
 [assembly: System.Reflection.AssemblyProductAttribute("bayessoft")]
 [assembly: System.Reflection.AssemblyTitleAttribute("bayessoft")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
